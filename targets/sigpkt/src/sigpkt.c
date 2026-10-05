@@ -42,6 +42,7 @@ int sigpkt_parse(const uint8_t *data, size_t size, sigpkt_info *out) {
 
     uint16_t values[SIGPKT_MAX_FIELDS];
     /* VULN: n_fields is not checked against SIGPKT_MAX_FIELDS. */
+    if (n_fields > SIGPKT_MAX_FIELDS) return SIGPKT_ERR_ARG;
     for (uint8_t i = 0; i < n_fields; i++) {
         values[i] = (uint16_t)(data[9 + i * 2] | (data[10 + i * 2] << 8));
     }

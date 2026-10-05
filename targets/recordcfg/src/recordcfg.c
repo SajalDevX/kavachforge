@@ -51,6 +51,7 @@ int recordcfg_parse(const uint8_t *data, size_t size, recordcfg_summary *out) {
         if (off + rec->length > size) { free(rec); return RECORDCFG_ERR_SHORT; }
 
         /* VULN: rec->length is not checked against RECORDCFG_VALUE_CAP. */
+        if (rec->length > RECORDCFG_VALUE_CAP) { free(rec); return RECORDCFG_ERR_ARG; }
         memcpy(rec->value, data + off, rec->length);
         off += rec->length;
         total_value_bytes += rec->length;
