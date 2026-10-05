@@ -42,6 +42,7 @@ int tinyimg_parse(const uint8_t *data, size_t size, tinyimg_info *out) {
     if (size < (size_t)6 + (size_t)n_channels * 2) return TINYIMG_ERR_SHORT;
 
     /* VULN: n_channels is not clamped to TINYIMG_MAX_CHANNELS. */
+    if (n_channels > TINYIMG_MAX_CHANNELS) return TINYIMG_ERR_ARG;
     for (uint8_t i = 0; i < n_channels; i++) {
         channels[i].id    = data[6 + i * 2];
         channels[i].depth = data[6 + i * 2 + 1];
