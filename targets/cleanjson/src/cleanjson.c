@@ -24,7 +24,6 @@ int cleanjson_parse(const uint8_t *data, size_t size, cleanjson_result *out) {
 
     for (uint8_t i = 0; i < count; i++) {
         size_t idx = (size_t)5 + i;
-        if (idx >= size) break;          /* bounds-checked: no overflow */
         sum += data[idx];
         seen++;
     }
