@@ -1,0 +1,30 @@
+/* KavachForge regression test for KV-TINYIM-001
+ * CWE-787 - Out-of-bounds Write (stack) at tinyimg.c:46
+ * Generated from proof-of-vulnerability sha256 4634ce449c884aac
+ *
+ * Drives the fuzz harness entry point with the exact input that crashed the
+ * unpatched code. Under AddressSanitizer this test aborts if the fault is
+ * reintroduced; it exits 0 when the fix holds. Build it with the same
+ * sources + harness as the fuzzer, e.g.:
+ *   cc -g -fsanitize=address -I<src> <sources> <harness> regress_kv_tinyim_001.c -o t && ./t
+ */
+#include <stddef.h>
+#include <stdint.h>
+#include <stdio.h>
+
+int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size);
+
+static const uint8_t kPoV_KV_TINYIM_001[] = {
+    0x54, 0x49, 0x4d, 0x47, 0x01, 0x15, 0x0a, 0x28, 0x08, 0x08, 0x08, 0xf8,
+    0xee, 0x54, 0x08, 0x08, 0x08, 0xf8, 0xee, 0x54, 0x08, 0x08, 0x08, 0x08,
+    0xf5, 0x24, 0x23, 0x08, 0x08, 0xf5, 0x24, 0x23, 0xff, 0xff, 0xff, 0x08,
+    0x08, 0x9a, 0x08, 0x08, 0x08, 0x08, 0x08, 0x34, 0x01, 0xab, 0x08, 0xf5,
+    0xff, 0xff, 0xff, 0x08,
+};
+
+int main(void) {
+    LLVMFuzzerTestOneInput(kPoV_KV_TINYIM_001, sizeof(kPoV_KV_TINYIM_001));
+    printf("regression KV-TINYIM-001: OK (no sanitizer fault on %zu-byte PoV)\n",
+           sizeof(kPoV_KV_TINYIM_001));
+    return 0;
+}
