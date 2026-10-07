@@ -9,3 +9,6 @@ targets/_onboarded/
 rules/semgrep/p_secrets.yml
 vendor/
 kavachforge-final.zip
+tasks/*_final.json
+tasks/planchk*.json
+tasks/logchk*.json
