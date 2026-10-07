@@ -31,7 +31,7 @@ if [ "${1:-}" != "--no-wheels" ]; then
 fi
 rm -f "$OUT"
 zip -qr "$OUT" . -x '.git/*' 'artifacts/*' 'cache/*' 'targets/_onboarded/*' '*/__pycache__/*' '*.pyc' \
-    'research_notes/*' 'reports/*' '*.o' '*.out'
+    'research_notes/*' 'reports/*' '*.o' '*.out' '*.zip' '*.tar.gz' '.DS_Store' '*/.DS_Store'
 ls -la "$OUT"
 echo
 echo "On the jury box:"
